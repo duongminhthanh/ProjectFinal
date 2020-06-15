@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/css.scss"> -->
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+        .login-page {
+            width: 360px;
+            padding: 8% 0 0;
+            margin: auto;
+        }
+        
+        .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+        
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #4CAF50;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+        }
+        
+        .form button:hover,
+        .form button:active,
+        .form button:focus {
+            background: #43A047;
+        }
+        
+        .form .message {
+            margin: 15px 0 0;
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+        
+        .form .message a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .form .register-form {
+            display: none;
+        }
+        
+        .form .registers-form {
+            display: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .container:before,
+        .container:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        
+        .container .info {
+            margin: 50px auto;
+            text-align: center;
+        }
+        
+        .container .info h1 {
+            margin: 0 0 15px;
+            padding: 0;
+            font-size: 36px;
+            font-weight: 300;
+            color: #1a1a1a;
+        }
+        
+        .container .info span {
+            color: #4d4d4d;
+            font-size: 12px;
+        }
+        
+        .container .info span a {
+            color: #000000;
+            text-decoration: none;
+        }
+        
+        .container .info span .fa {
+            color: #EF3B3A;
+        }
+        
+        body {
+            background: #76b852;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+            background: -moz-linear-gradient(right, #76b852, #8DC26F);
+            background: -o-linear-gradient(right, #76b852, #8DC26F);
+            background: linear-gradient(to left, #76b852, #8DC26F);
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+    <script src="js/md5.js"></script>
+</head>
+
+<body>
+
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form">
+                <input type="text" id="nameReg" placeholder="Họ và tên" />
+                <input type="text" id="userReg" placeholder="Tài khoản" />
+                <input type="password" id="pass1Reg" placeholder="Mật khẩu" />
+                <input type="password" id="pass2Reg" placeholder="Xác nhận mật khẩu" />
+                <button type="submit" onclick="Register()">create</button>
+                <button class="mt-4" type="button" data-toggle="modal" data-target="#modalLoginForm">Find Password</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+            </form>
+            <form class="login-form">
+                <input type="text" id="userLogin" placeholder="Tài khoản" />
+                <input type="password" id="passwordLogin" placeholder="Mật khẩu" />
+                <button type="submit" onclick="CheckLogin()">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
+
+        </div>
+        <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Find Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <input type="text" id="usernameF" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-email">Username</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <i class="fas fa-lock prefix grey-text"></i>
+                            <input type="email" id="emailF" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Email</label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button class="btn btn-default" onclick="fPassword()">Find</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+<script>
+    $(".message a").click(function() {
+        $("form").animate({
+            height: "toggle",
+            opacity: "toggle"
+        }, "slow");
+    });
+</script>
+<script>
+    var userWesteros = localStorage.getItem("userWesteros");
+    userWesteros = JSON.parse(userWesteros);
+    var checkPassLocalStorage = localStorage.getItem("checkPassLocalStorage");
+    checkPassLocalStorage = JSON.parse(checkPassLocalStorage);
+    if (checkPassLocalStorage === null) {
+        checkPassLocalStorage = []
+    } else {
+        var data = JSON.parse(checkPassLocalStorage[0]);
+        var dataUser = JSON.parse(userWesteros[data.Id * 1]);
+        if (data.Pass == dataUser.Password) {
+            window.location.assign("profile.html");
+        } else {
+            window.location.assign("index.html");
+        }
+    }
+
+    if (userWesteros === null) {
+        userWesteros = [];
+        var Database = JSON.stringify({
+            Name: "Trần Thanh Nam",
+            User: "admin1",
+            Email: "admin1@gmail.com",
+            Password: "202cb962ac59075b964b07152d234b70",
+            Role: "Admin",
+            Address: null
+        });
+        userWesteros.push(Database);
+        var Database = JSON.stringify({
+            Name: "Lê Hoàng Luật",
+            User: "admin2",
+            Email: "admin2@gmail.com",
+            Password: "202cb962ac59075b964b07152d234b70",
+            Role: "Admin",
+            Address: null
+        });
+        userWesteros.push(Database);
+        var Database = JSON.stringify({
+            Name: "Lê Ninh",
+            User: "admin3",
+            Email: "admin3@gmail.com",
+            Password: "202cb962ac59075b964b07152d234b70",
+            Role: "Admin",
+            Address: null
+        });
+        userWesteros.push(Database);
+        var Database = JSON.stringify({
+            Name: "Nguyễn Xuân Thông",
+            User: "admin4",
+            Email: "admin4@gmail.com",
+            Password: "202cb962ac59075b964b07152d234b70",
+            Role: "Admin",
+            Address: null
+        });
+        userWesteros.push(Database);
+        var Database = JSON.stringify({
+            Name: "Trần Công Đô",
+            User: "admin5",
+            Email: "admin5@gmail.com",
+            Password: "202cb962ac59075b964b07152d234b70",
+            Role: "Admin",
+            Address: null
+        });
+        userWesteros.push(Database);
+        localStorage.setItem("userWesteros", JSON.stringify(userWesteros));
+    }
+
+
+    function CheckLogin() {
+        var check = -1;
+        var ping;
+        for (var i in userWesteros) {
+            var data = JSON.parse(userWesteros[i]);
+            if (data.User == document.getElementById("userLogin").value) {
+                check++;
+                ping = i;
+            }
+        }
+        if (check != 0) {
+            alert("Tài khoản không tồn tại, Mời bạn đăng kí!")
+        } else {
+            var data = JSON.parse(userWesteros[ping]);
+            if ((data.Password == document.getElementById("passwordLogin").value)) {
+                var datas = JSON.parse(userWesteros[ping]);
+                var CheckPass = JSON.stringify({
+                    Id: ping,
+                    Name: datas.Name,
+                    Pass: document.getElementById("passwordLogin").value,
+                    Role: datas.Role
+                });
+                checkPassLocalStorage.push(CheckPass);
+                localStorage.setItem("checkPassLocalStorage", JSON.stringify(checkPassLocalStorage));
+                window.location.assign("index.html");
+            } else {
+                if ((data.Password == md5(document.getElementById("passwordLogin").value))) {
+                    var datas = JSON.parse(userWesteros[ping]);
+                    var CheckPass = JSON.stringify({
+                        Id: ping,
+                        Name: datas.Name,
+                        Pass: document.getElementById("passwordLogin").value,
+                        Role: datas.Role
+                    });
+                    checkPassLocalStorage.push(CheckPass);
+                    localStorage.setItem("checkPassLocalStorage", JSON.stringify(checkPassLocalStorage));
+                    window.location.assign("profile.html");
+                } else {
+                    alert("Mật khẩu không đúng!");
+                }
+            }
+        }
+
+
+    }
+
+
+    function Register() {
+        var checking = -1;
+        for (var i in userWesteros) {
+            var data = JSON.parse(userWesteros[i]);
+            if (data.User == document.getElementById("userReg").value) {
+                checking++;
+            }
+        }
+
+        if (checking != -1) {
+            alert("Tài khoản đã tồn tại");
+        } else {
+            if (document.getElementById("userReg").value == "" || document.getElementById("nameReg").value == "" || document.getElementById("pass1Reg").value == "") {
+                alert("Bạn nhập thiếu trường");
+            } else {
+                if (document.getElementById("pass1Reg").value != document.getElementById("pass2Reg").value) {
+                    alert("Mật khẩu nhập lại không chính xác")
+                } else {
+                    var Databases = JSON.stringify({
+                        Name: document.getElementById("nameReg").value,
+                        User: document.getElementById("userReg").value,
+                        Email: document.getElementById("userReg").value + "@gmail.com",
+                        Password: md5(document.getElementById("pass1Reg").value),
+                        Role: "User",
+                        Address: null
+                    });
+                    userWesteros.push(Databases);
+                    localStorage.setItem("userWesteros", JSON.stringify(userWesteros));
+                    alert("Tạo tài khoản thành công");
+                }
+            }
+
+        }
+        window.location.reload();
+    }
+
+    function fPassword() {
+        var checkq = -1;
+        var q = -1;
+        for (var i in userWesteros) {
+            var data = JSON.parse(userWesteros[i]);
+            if (data.User == document.getElementById("usernameF").value && data.Email == document.getElementById("emailF").value) {
+                checkq++;
+                q = i;
+            }
+        }
+        if (checkq == -1) {
+            alert("Không tìm được tài khoản này");
+            window.location.reload();
+        } else {
+            var dts = JSON.parse(userWesteros[q]);
+            alert("Mật khẩu của bạn là : " + dts.Password);
+            window.location.reload();
+        }
+    }
+</script>
+
+</html>
